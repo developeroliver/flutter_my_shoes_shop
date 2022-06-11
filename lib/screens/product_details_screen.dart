@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:my_shoes/constants/color.dart';
+import 'package:my_shoes/widgets/elevated_button_widget.dart';
+import 'package:my_shoes/widgets/subtitle_product_widget.dart';
+import 'package:my_shoes/widgets/title_product_widget.dart';
+
+import '../models/product.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  ProductDetailsScreen({Key? key}) : super(key: key);
+  final Product product;
+  ProductDetailsScreen({Key? key, required this.product}) : super(key: key);
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -17,9 +23,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     double screenHeight = (screenSize.height - appBarHeight) - screenPadding;
 
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: widget.product.backgroundcolor,
       appBar: AppBar(
-        backgroundColor: Colors.grey,
+        backgroundColor: widget.product.backgroundcolor,
         elevation: 0,
         actions: [
           IconButton(
@@ -44,7 +50,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     child: Container(
                       height: constraints.maxHeight * 0.35,
                       width: constraints.maxWidth,
-                      color: Colors.grey,
+                      color: widget.product.backgroundcolor,
                       child: Padding(
                         padding: const EdgeInsets.all(14.0),
                         child: Column(
@@ -54,37 +60,21 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Sneakers Category",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 15),
-                                ),
-                                Text(
-                                  "Product name",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline4!
-                                      .copyWith(
-                                        color: Colors.white,
-                                      ),
+                                SubtitleProductWidget(
+                                    subtitle: "Sneakers Categorry"),
+                                TitleProductWidget(
+                                  title: widget.product.title,
                                 ),
                               ],
                             ),
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Price",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 15),
-                                ),
-                                Text(
-                                  "120€",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline4!
-                                      .copyWith(
-                                        color: Colors.white,
-                                      ),
+                                SubtitleProductWidget(subtitle: "Prix"),
+                                TitleProductWidget(
+                                  title:
+                                      widget.product.price.toStringAsFixed(0) +
+                                          " €",
                                 ),
                               ],
                             ),
@@ -107,39 +97,51 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           left: 20.0, right: 20.0, top: 70.0),
                       child: Column(
                         children: [
+                          Spacer(),
                           Row(
                             children: [
                               Expanded(
                                 child: Text("En stock"),
                               ),
                               Expanded(
-                                child: DropdownButton(
-                                    isExpanded: true,
-                                    hint: Text(
-                                      "tailles",
-                                      style: TextStyle(
-                                        color: kTextColor,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 2),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[200],
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  child: DropdownButton(
+                                      isExpanded: true,
+                                      hint: Text(
+                                        "tailles",
+                                        style: TextStyle(
+                                          color: kTextColor,
+                                        ),
                                       ),
-                                    ),
-                                    items: [
-                                      DropdownMenuItem(
-                                        value: "36",
-                                        child: Text("36"),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: "37",
-                                        child: Text("37"),
-                                      ),
-                                    ],
-                                    onChanged: (value) {}),
+                                      value: "36",
+                                      underline: Container(),
+                                      items: [
+                                        DropdownMenuItem(
+                                          value: "36",
+                                          child: Text("36"),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "37",
+                                          child: Text("37"),
+                                        ),
+                                      ],
+                                      onChanged: (value) {}),
+                                ),
                               ),
                             ],
                           ),
-                          SizedBox(height: 20),
-                          Text(
-                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting",
+                          Spacer(),
+                          Expanded(
+                            flex: 6,
+                            child: Text(widget.product.description),
                           ),
-                          SizedBox(height: 20),
+                          Spacer(),
                           Row(
                             children: [
                               Expanded(
@@ -186,23 +188,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               ),
                               Spacer(),
                               Expanded(
-                                flex: 8,
-                                child: ElevatedButton(
-                                  onPressed: () => print('Ajouter au panier'),
-                                  child: Text(
-                                    "Ajouter au panier",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    onPrimary: Colors.white,
-                                    primary: Colors.black,
-                                  ),
-                                ),
-                              )
+                                  flex: 7,
+                                  child: ElevatedButtonWidget(
+                                    title: 'Ajouter au panier',
+                                  )),
                             ],
+                          ),
+                          Spacer(
+                            flex: 1,
                           ),
                         ],
                       ),
@@ -211,7 +204,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   Positioned(
                     top: (constraints.maxHeight * 0.6) * 0.4,
                     left: constraints.maxWidth * 0.35,
-                    child: Image.asset('assets/images/black-shoe.png',
+                    child: Image.asset(widget.product.image,
                         width: constraints.maxWidth / 2),
                   )
                 ],

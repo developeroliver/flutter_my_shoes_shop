@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:my_shoes/screens/product_details_screen.dart';
+import 'package:my_shoes/widgets/product_card_widget.dart';
 
 import '../models/product.dart';
 
@@ -15,13 +15,20 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
         elevation: 0,
+        title: Text(
+          'My Shoes',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         leading: IconButton(
           onPressed: () => print('boutton menu'),
           icon: Image.asset(
             'assets/icons/menu.png',
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
         actions: [
@@ -29,7 +36,7 @@ class HomeScreen extends StatelessWidget {
             onPressed: () => print('Ajout panier'),
             icon: Image.asset(
               'assets/icons/shopping-cart-grey.png',
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
         ],
@@ -42,37 +49,11 @@ class HomeScreen extends StatelessWidget {
           itemCount: _products.length,
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ProductDetailsScreen()));
-                    },
-                    child: Container(
-                      height: 200,
-                      width: 200,
-                      decoration: BoxDecoration(
-                        color: _products[index].backgroundcolor,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(14.0),
-                        child: Image.asset(
-                          _products[index].image,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 1.0),
-                    child: Text(_products[index].title),
-                  ),
-                  Text(_products[index].price.toStringAsFixed(0) + ' €'),
-                ],
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+              child: ProductCardWidget(
+                products: _products,
+                index: index,
               ),
             );
           }),
