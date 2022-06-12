@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_shoes/utils/extensions.dart';
 
 import '../models/product.dart';
 import '../screens/product_details_screen.dart';
@@ -20,11 +21,13 @@ class ProductCardWidget extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ProductDetailsScreen(product: _products[index],)));
+                    builder: (context) => ProductDetailsScreen(
+                          product: _products[index],
+                        )));
           },
           child: Container(
-            height: 200,
-            width: 200,
+            height: 180,
+            width: 180,
             decoration: BoxDecoration(
               color: _products[index].backgroundcolor,
               borderRadius: BorderRadius.circular(20),
@@ -41,7 +44,7 @@ class ProductCardWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 1.0),
           child: Text(_products[index].title),
         ),
-        Text(_products[index].price.toStringAsFixed(0) + ' €'),
+        Text(_products[index].price.displayPriceInEuros()),
       ],
     );
   }

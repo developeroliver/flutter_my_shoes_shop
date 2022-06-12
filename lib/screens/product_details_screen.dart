@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:my_shoes/constants/color.dart';
-import 'package:my_shoes/widgets/elevated_button_widget.dart';
+import 'package:my_shoes/providers/cart_provider.dart';
+import 'package:my_shoes/utils/extensions.dart';
+import 'package:my_shoes/widgets/add_remove_button_widget.dart';
+import 'package:my_shoes/widgets/dropdown_button_widget.dart';
 import 'package:my_shoes/widgets/subtitle_product_widget.dart';
 import 'package:my_shoes/widgets/title_product_widget.dart';
+import 'package:provider/provider.dart';
 
+import '../constants/strings.dart';
 import '../models/product.dart';
+import '../widgets/cart_app_bar_item_widget.dart';
+import '../widgets/elevated_button_widget.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final Product product;
@@ -15,6 +21,8 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  int _productQuantity = 1;
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -22,19 +30,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     double screenPadding = MediaQuery.of(context).padding.top;
     double screenHeight = (screenSize.height - appBarHeight) - screenPadding;
 
+    final _cartProvider = Provider.of<CartProvider>(context);
+
     return Scaffold(
       backgroundColor: widget.product.backgroundcolor,
       appBar: AppBar(
         backgroundColor: widget.product.backgroundcolor,
         elevation: 0,
         actions: [
-          IconButton(
-            onPressed: () => print('Ajout panier'),
-            icon: Image.asset(
-              'assets/icons/shopping-cart-grey.png',
-              color: Colors.white,
-            ),
-          ),
+          CartAppBarItemWidget(),
         ],
       ),
       body: Container(
@@ -70,11 +74,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SubtitleProductWidget(subtitle: "Prix"),
+                                SubtitleProductWidget(subtitle: Strings.price),
                                 TitleProductWidget(
-                                  title:
-                                      widget.product.price.toStringAsFixed(0) +
-                                          " €",
+                                  title: widget.product.price
+                                      .displayPriceInEuros(),
                                 ),
                               ],
                             ),
@@ -101,7 +104,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           Row(
                             children: [
                               Expanded(
-                                child: Text("En stock"),
+                                child: Text(Strings.available),
                               ),
                               Expanded(
                                 child: Container(
@@ -111,27 +114,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     color: Colors.grey[200],
                                     borderRadius: BorderRadius.circular(30),
                                   ),
-                                  child: DropdownButton(
-                                      isExpanded: true,
-                                      hint: Text(
-                                        "tailles",
-                                        style: TextStyle(
-                                          color: kTextColor,
-                                        ),
-                                      ),
-                                      value: "36",
-                                      underline: Container(),
-                                      items: [
-                                        DropdownMenuItem(
-                                          value: "36",
-                                          child: Text("36"),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: "37",
-                                          child: Text("37"),
-                                        ),
-                                      ],
-                                      onChanged: (value) {}),
+                                  child: DropdownButtonWidget(),
                                 ),
                               ),
                             ],
@@ -142,58 +125,43 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             child: Text(widget.product.description),
                           ),
                           Spacer(),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.grey,
-                                      width: 1,
+                          Expanded(
+                              flex: 2,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 3,
+                                    child: AddRemoveButtonWidget(
+                                      numberOfItemToDisplay:
+                                          _productQuantity.toString(),
+                                      pressedLessButton: () {
+                                        setState(() {
+                                          if (_productQuantity > 1) {
+                                            _productQuantity--;
+                                          }
+                                        });
+                                      },
+                                      pressedPlusButton: () {
+                                        setState(() {
+                                          _productQuantity++;
+                                        });
+                                      },
                                     ),
-                                    shape: BoxShape.circle,
                                   ),
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.remove,
-                                      size: 15,
+                                  Spacer(),
+                                  Expanded(
+                                    flex: 8,
+                                    child: ElevatedButtonWidget(
+                                      onClickCallBack: () {
+                                        Product product = widget.product;
+                                        _cartProvider.addProduct(
+                                            product, _productQuantity);
+                                      },
+                                      title: Strings.addToCart,
                                     ),
-                                    onPressed: () => print('supprimer'),
                                   ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  "1",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.grey,
-                                      width: 1,
-                                    ),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: IconButton(
-                                    icon: Icon(Icons.add, size: 15),
-                                    onPressed: () => print('supprimer'),
-                                  ),
-                                ),
-                              ),
-                              Spacer(),
-                              Expanded(
-                                  flex: 7,
-                                  child: ElevatedButtonWidget(
-                                    title: 'Ajouter au panier',
-                                  )),
-                            ],
-                          ),
+                                ],
+                              )),
                           Spacer(
                             flex: 1,
                           ),

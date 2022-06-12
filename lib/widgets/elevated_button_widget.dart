@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 
 class ElevatedButtonWidget extends StatelessWidget {
   final String title;
-  const ElevatedButtonWidget({Key? key, required this.title}) : super(key: key);
+  final VoidCallback onClickCallBack;
+  const ElevatedButtonWidget(
+      {Key? key, required this.title, required this.onClickCallBack})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => print('Ajouter au panier'),
+      onPressed: onClickCallBack,
       child: Text(
         title,
         style: TextStyle(
@@ -15,6 +19,9 @@ class ElevatedButtonWidget extends StatelessWidget {
         ),
       ),
       style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
         onPrimary: Colors.white,
         primary: Colors.black,
       ),

@@ -7,13 +7,20 @@ class Product {
   final String image;
   final Color backgroundcolor;
   final double price;
+  final UniqueKey id;
+  int numberInCart = 1;
+
+  double get amountInCartForSameProduct {
+    return price * numberInCart;
+  }
+
   Product(
     this.title,
     this.description,
     this.image,
     this.backgroundcolor,
     this.price,
-  );
+  ) : id = UniqueKey();
 
   static List<Product> products = [
     Product(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_shoes/widgets/cart_app_bar_item_widget.dart';
 
 import 'package:my_shoes/widgets/product_card_widget.dart';
 
@@ -25,20 +26,14 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         leading: IconButton(
-          onPressed: () => print('boutton menu'),
+          onPressed: () {},
           icon: Image.asset(
             'assets/icons/menu.png',
             color: Colors.white,
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () => print('Ajout panier'),
-            icon: Image.asset(
-              'assets/icons/shopping-cart-grey.png',
-              color: Colors.white,
-            ),
-          ),
+          CartAppBarItemWidget(),
         ],
       ),
       body: GridView.builder(
