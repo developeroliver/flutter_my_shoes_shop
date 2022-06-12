@@ -7,7 +7,7 @@ FR: Permet de gérer un petit eCommerce sur des basket en utilisant le Provider.
 
 US: Allows to manage a small eCommerce on baskets using the Provider
 
-![mmy_shoes_shop](assets/my_shoes.mp4?raw=true "my_shoes_shop")
+![my_shoes_shop](assets/my_shoes.mp4?raw=true "my_shoes_shop")
 
 
 ![my_shoes_shop](assets/my_shoes.png?raw=true "my_shoes_shop")
