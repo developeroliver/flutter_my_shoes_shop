@@ -1,17 +1,15 @@
-# my_shoes
+# my_shop
 
-A new Flutter project.
+A eCommerce Flutter project.
 
-## Getting Started
+# FLUTTER-my_shop
+FR: Permet de gérer un petit eCommerce sur des basket en utilisant le Provider.
 
-This project is a starting point for a Flutter application.
+US: Allows to manage a small eCommerce on baskets using the Provider
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# flutter_my_shoes_shop
+![my_shop](assets/my_shop.png?raw=true "my_shop")
+![my_shop](assets/my_shop1.png?raw=true "my_shop")
+![my_shop](assets/my_shop2.png?raw=true "my_shop")
+![my_shop](assets/my_shop3.png?raw=true "my_shop")
+![my_shop](assets/my_shop4.png?raw=true "my_shop")
