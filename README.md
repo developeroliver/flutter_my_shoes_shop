@@ -1,12 +1,37 @@
-# my_shop
+# E-Commerce
 
-A eCommerce Flutter project.
+A mini e-Commerce App- Works on Android & iOS! 
 
-# FLUTTER-my_shop
-FR: Permet de gérer un petit eCommerce sur des basket en utilisant le Provider.
+## Features
+- Responsive e-Commerce UI
+- Email & Password Authentication
+- admin and users account
+- add new articles (admin)
+- Add articles to cart (users)
+- animation
+- EVERYTHING REAL TIME
+- Sign Out
+- unit tests
 
-US: Allows to manage a small eCommerce on baskets using the Provider
+## Screenshot
 
-![my_shoes_shop](assets/my_shoes.png?raw=true "my_shoes")
+<p align="center">
+  <img width="200" src="https://github.com/developeroliver/flutter_my_shoes_shop_provider/blob/master/screenshot.gif" alt="gif">
+</p>
+
+
+## Installation
+After cloning this repository, migrate to ```flutter_ecommerce_firestore_riverpod``` folder. Then, follow the following steps:
+- Create Firebase Project
+- Enable Authentication
+- Make Firestore Rules
+- Create Android and iOS Apps
+- Take FirebaseOptions and put it in main function in main.dart file replacing my keys 
+Then run the following commands to run your app:
+```bash
+  flutter pub get
+  open -a simulator (to get iOS Simulator)
+  flutter run
+```
 
 
