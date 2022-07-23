@@ -33,5 +33,11 @@ Then run the following commands to run your app:
   open -a simulator (to get iOS Simulator)
   flutter run
 ```
+## Tech Used
+**Server**: Firebase Auth, Firebase Storage, Firebase Firestore
 
+**Client**: Flutter & Riverpod
+    
+## Feedback
 
+If you have any feedback, please reach out to me at developpeur.olive@gmail.com
